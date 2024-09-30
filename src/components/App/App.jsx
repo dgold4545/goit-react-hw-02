@@ -3,7 +3,7 @@ import Options from "../Options/Options";
 import Feedback from "../Feedback/Feedback";
 import Notification from "../Notification/Notification";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./App.module.css";
 
@@ -26,9 +26,15 @@ export default function App() {
   const totalFeedback =
     userFeedback.good + userFeedback.neutral + userFeedback.bad;
 
+  const totalPositiveFeedback = Math.round(
+    (userFeedback.good / totalFeedback) * 100
+  );
+
   const handleResetButton = () => {
     setUserFeedback(BASE_VALUE_OF_FEEDBACK);
   };
+
+  useEffect(() => {}, []);
 
   return (
     <div>
@@ -41,7 +47,11 @@ export default function App() {
       />
 
       {totalFeedback > 0 ? (
-        <Feedback feedbackData={userFeedback} />
+        <Feedback
+          feedbackData={userFeedback}
+          totalFeedback={totalFeedback}
+          totalPositiveFeedback={totalPositiveFeedback}
+        />
       ) : (
         <Notification />
       )}
