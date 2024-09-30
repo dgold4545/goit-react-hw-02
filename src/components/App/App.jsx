@@ -13,8 +13,18 @@ const BASE_VALUE_OF_FEEDBACK = {
   bad: 0,
 };
 
+const KEY_FEEDBACK_OF_LOCAL_STORAGE = "feedback_key";
+
 export default function App() {
-  const [userFeedback, setUserFeedback] = useState(BASE_VALUE_OF_FEEDBACK);
+  const [userFeedback, setUserFeedback] = useState(() => {
+    const feedbackDataFromLocalStorage = window.localStorage.getItem(
+      KEY_FEEDBACK_OF_LOCAL_STORAGE
+    );
+
+    return feedbackDataFromLocalStorage !== null
+      ? JSON.parse(feedbackDataFromLocalStorage)
+      : BASE_VALUE_OF_FEEDBACK;
+  });
 
   const updateFeedback = feedbackType => {
     setUserFeedback({
@@ -34,7 +44,12 @@ export default function App() {
     setUserFeedback(BASE_VALUE_OF_FEEDBACK);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    window.localStorage.setItem(
+      KEY_FEEDBACK_OF_LOCAL_STORAGE,
+      JSON.stringify(userFeedback)
+    );
+  }, [userFeedback]);
 
   return (
     <div>
