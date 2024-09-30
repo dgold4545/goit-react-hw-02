@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import "modern-normalize";
 
-import App from "./App.jsx";
+import App from "./components/App/App.jsx";
 
 import "./index.css";
 
